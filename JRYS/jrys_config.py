@@ -8,8 +8,8 @@ from .utils.resource.RESOURCE_PATH import CONFIG_PATH
 CONFIG_DEFAULT: Dict[str, GSC] = {
     "BotName": GsStrConfig(
         "机器人名称",
-        "显示在运势建议框左侧的机器人名称，例如「小维」",
-        "命运",
+        "显示在运势建议框左侧的机器人名称，例如「小岸」",
+        "小岸",
     ),
 }
 

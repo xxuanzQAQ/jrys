@@ -49,7 +49,7 @@ git clone https://github.com/<your-username>/JRYS.git
 将 JPG / PNG / WebP 格式的图片放入以下目录，插件会随机选取作为运势卡片背景：
 
 ```
-gsuid_core/plugins/JRYS/JRYS/utils/resource/bg/
+gsuid_core/data/JRYS/bg
 ```
 
 - 不放置背景图也可正常使用，卡片将以主题纯色背景显示
@@ -69,25 +69,14 @@ gsuid_core/plugins/JRYS/JRYS/utils/resource/bg/
 
 ```json
 {
-  "BotName": "小维"
+  "BotName": "小岸"
 }
 ```
-
----
-
-## 主人权限
-
-gsuid_core 系统配置中 `masters` 列表内的用户 ID 即为主人，享有：
-
-- 逆天改命无限次数
-- 改命必定成功
-- 次数不累计
-
-主人 ID 在 gsuid_core 系统设置（`core_config` → `masters`）中配置。
-
 ---
 
 ## 目录结构
+
+插件代码目录（`gsuid_core/plugins/JRYS/`）：
 
 ```
 JRYS/
@@ -101,9 +90,16 @@ JRYS/
     ├── jrys.py            # 核心逻辑与绘图
     ├── jrys_config.py     # 插件配置
     └── utils/resource/
-        ├── RESOURCE_PATH.py
-        ├── bg/            # 背景图目录（自行放置）
-        └── cache/         # 用户运势缓存（自动生成）
+        └── RESOURCE_PATH.py
+```
+
+运行时数据目录（`gsuid_core/data/JRYS/`，自动创建）：
+
+```
+data/JRYS/
+├── config.json            # 插件配置（BotName 等）
+├── bg/                    # 背景图目录（自行放置图片）
+└── cache/                 # 用户运势缓存（自动生成）
 ```
 
 ---

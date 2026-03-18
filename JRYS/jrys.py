@@ -427,43 +427,49 @@ async def _draw_card(theme: dict, data: dict, nickname: str, user_id: str,
                   right, font=fn_poem, fill=(50, 55, 72, 255), anchor="mm")
     y += poem_h + GAP
 
-    fn_cat = F(16 * S)
-    CATS_H = 90 * S
-    _rrect(draw, (PAD, y, W - PAD, y + CATS_H), 18 * S, fill=card_bg + (255,))
+    fn_cat    = F(15 * S)
     COL_W     = (W - PAD * 2) // 4
-    BAR_SEG_W = 36 * S
-    SEG_GAP   = 6 * S
+    BAR_SEG_W = 34 * S
+    SEG_GAP   = 5 * S
     BAR_H     = 10 * S
     BAR_TOTAL = 3 * BAR_SEG_W + 2 * SEG_GAP
+    CAT_LABEL_H = 22 * S
+    CAT_GAP     = 8 * S
+    CATS_H      = 18 * S + CAT_LABEL_H + CAT_GAP + BAR_H + 18 * S
+    _rrect(draw, (PAD, y, W - PAD, y + CATS_H), 18 * S, fill=card_bg + (255,))
+    bar_top = y + 18 * S + CAT_LABEL_H + CAT_GAP
     for i, cat in enumerate(fortune["categories"]):
-        cx_ = PAD + i * COL_W + COL_W // 2
-        draw.text((cx_, y + 20 * S), cat["name"], font=fn_cat,
+        bx  = PAD + i * COL_W + (COL_W - BAR_TOTAL) // 2
+        lx  = bx + BAR_TOTAL // 2
+        ly  = y + 18 * S + CAT_LABEL_H // 2
+        draw.text((lx, ly), cat["name"], font=fn_cat,
                   fill=(95, 95, 100, 255), anchor="mm")
         score = max(1, min(3, cat["score"]))
-        bx    = cx_ - BAR_TOTAL // 2
         for j in range(3):
             bx_j  = bx + j * (BAR_SEG_W + SEG_GAP)
             bfill = primary + (255,) if j < score else (220, 222, 226, 255)
             draw.rounded_rectangle(
-                [bx_j, y + 56 * S, bx_j + BAR_SEG_W, y + 56 * S + BAR_H],
+                [bx_j, bar_top, bx_j + BAR_SEG_W, bar_top + BAR_H],
                 radius=5 * S, fill=bfill)
     y += CATS_H + GAP
 
     fn_adv    = F(16 * S)
-    ICON_W    = 32 * S
+    ICON_W    = 28 * S
+    ICON_GAP  = 8 * S
     adv_body  = fortune["advice"] + "~"
     adv_full  = f"{bot_name}：{adv_body}"
-    adv_max   = W - PAD * 2 - 20 * S * 2 - ICON_W
+    adv_max   = W - PAD * 2 - 16 * S * 2 - ICON_W - ICON_GAP
     adv_lines = _wrap_text(draw, adv_full, fn_adv, adv_max)
-    ADV_PV    = 18 * S
+    ADV_PV    = 16 * S
     ADV_LH    = 26 * S
     adv_h     = ADV_PV * 2 + len(adv_lines) * ADV_LH
     _rrect(draw, (PAD, y, W - PAD, y + adv_h), 18 * S,
            fill=advice_bg + (255,), outline=advice_bdr + (200,), lw=2 * S)
-    draw.text((PAD + 16 * S, y + adv_h // 2), "✨", font=F(20 * S),
-              fill=(255, 195, 0, 255), anchor="lm")
+    text_x = PAD + 16 * S + ICON_W + ICON_GAP
+    draw.text((PAD + 16 * S, y + ADV_PV), "✨", font=F(20 * S),
+              fill=(255, 195, 0, 255), anchor="lt")
     for li, ln in enumerate(adv_lines):
-        draw.text((PAD + 16 * S + ICON_W, y + ADV_PV + li * ADV_LH),
+        draw.text((text_x, y + ADV_PV + li * ADV_LH),
                   ln, font=fn_adv, fill=(55, 55, 60, 255), anchor="lt")
     y += adv_h + GAP
 

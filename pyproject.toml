@@ -1,0 +1,16 @@
+[project]
+name = "JRYS"
+version = "0.1.0"
+description = "今日运势插件，从Yunzai JS插件移植到gsuid_core框架"
+authors = [
+    {name = "Ported to gsuid_core", email = ""},
+]
+dependencies = ["Pillow"]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
